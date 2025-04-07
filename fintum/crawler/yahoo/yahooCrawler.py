@@ -1,10 +1,10 @@
 import yfinance as yf
 import pandas as pd
-from ..scrapper import Scrapper
+from ..crawler import Crawler
 
 from typing import Optional
 
-class YahooScrapper(Scrapper):
+class YahooCrawler(Crawler):
     def __init__(self):
         super().__init__()
     

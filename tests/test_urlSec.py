@@ -2,7 +2,7 @@ import pytest
 import requests
 from unittest.mock import Mock, patch, MagicMock
 from datetime import datetime
-from fintum.scrappers.sec.urlSec import UrlSec
+from fintum.crawler.sec.urlSec import UrlSec
 
 def test_get_links():
     html = '''

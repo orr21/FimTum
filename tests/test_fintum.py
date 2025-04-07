@@ -4,7 +4,7 @@ import zipfile
 from io import BytesIO
 from unittest.mock import patch , Mock
 from fintum.fintum import FinTum
-from fintum.scrappers.sec.urlSec import UrlSec
+from fintum.crawler.sec.urlSec import UrlSec
 
 def get_mock_zip():
     zip_buffer = BytesIO()

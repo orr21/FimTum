@@ -1,7 +1,7 @@
-from ..scrapper import Scrapper
+from ..crawler import Crawler
 from .urlSec import UrlSec
 
-class SecScrapper(Scrapper):
+class SecCrawler(Crawler):
     def __init__(self, url):
         self.url_handler = UrlSec(url)
 

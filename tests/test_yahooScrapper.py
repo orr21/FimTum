@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import Mock
 import pandas as pd
 import yfinance as yf
-from fintum.scrappers.yahoo.yahooScrapper import YahooScrapper
+from fintum.crawler.yahoo.yahooCrawler import YahooCrawler
 
 @pytest.fixture
 def mock_yfinance(monkeypatch):
@@ -24,7 +24,7 @@ def test_valid_ticker(mock_yfinance, capsys):
     }, index=pd.date_range("2024-01-01", periods=2))
     mock_history.return_value = test_data.copy()
 
-    scrapper = YahooScrapper()
+    scrapper = YahooCrawler()
     result = scrapper.get_data("AAPL")
 
     assert not result.empty, "The DataFrame should not be empty for a valid ticker."
@@ -36,17 +36,17 @@ def test_valid_ticker(mock_yfinance, capsys):
 
 def test_invalid_ticker():
     with pytest.raises(ValueError, match="The 'ticker' parameter must be a string."):
-        YahooScrapper().get_data(123)
+        YahooCrawler().get_data(123)
     with pytest.raises(ValueError, match="The 'ticker' parameter is required."):
-        YahooScrapper().get_data("")
+        YahooCrawler().get_data("")
     with pytest.raises(ValueError, match="The 'ticker' parameter is required."):
-        YahooScrapper().get_data(None)
+        YahooCrawler().get_data(None)
 
 def test_no_data_found(mock_yfinance, capsys):
     mock_ticker, mock_history = mock_yfinance
     mock_history.return_value = pd.DataFrame()  
     
-    scrapper = YahooScrapper()
+    scrapper = YahooCrawler()
     result = scrapper.get_data("INVALID")
     
     assert result.empty, "The returned DataFrame should be empty when no data is found."
@@ -57,7 +57,7 @@ def test_network_error(mock_yfinance, capsys):
     mock_ticker, mock_history = mock_yfinance
     mock_history.side_effect = ConnectionError("API Error")
     
-    scrapper = YahooScrapper()
+    scrapper = YahooCrawler()
     result = scrapper.get_data("AAPL")
     
     assert result.empty, "The returned DataFrame should be empty when a network error occurs."
@@ -69,7 +69,7 @@ def test_different_parameters(mock_yfinance):
     test_data = pd.DataFrame({'Close': [150]}, index=[pd.Timestamp("2024-01-01")])
     mock_history.return_value = test_data
     
-    scrapper = YahooScrapper()
+    scrapper = YahooCrawler()
     
     result = scrapper.get_data("MSFT", start="2024-01-01", end="2024-01-02")
     assert len(result) == 1, "There should be exactly one row for MSFT with the given date range."

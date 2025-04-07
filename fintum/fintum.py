@@ -1,5 +1,5 @@
-from .scrappers.sec.secScrapper import SecScrapper
-from .scrappers.yahoo.yahooScrapper import YahooScrapper
+from .crawler.sec.secCrawler import SecCrawler
+from .crawler.yahoo.yahooCrawler import YahooCrawler
 
 class FinTum:
     def __init__(self):
@@ -18,9 +18,9 @@ class FinTum:
         zipfile.ZipFile: Zip file with the SEC filings
 
         Example:
-        >>> FinTum.get_sec_zip("http://fake-url.com", quarter=1, year=2024)
+        >>> FinTum.get_sec_zip("https://www.sec.gov/data-research/sec-markets-data/financial-statement-notes-data-sets", quarter=1, year=2024)
         """
-        return SecScrapper(url).get_data(quarter, year)
+        return SecCrawler(url).get_data(quarter, year)
 
     @staticmethod
     def get_yahoo_data(ticker: str, start: str, end: str, period: str = 'max'):
@@ -48,4 +48,4 @@ class FinTum:
         >>> FinTum.get_yahoo_data("AAPL", "2024-01-01", "2024-01-10")
         >>> FinTum.get_yahoo_data("AAPL", "2024-01-01", "2024-01-10", period="1d")
         """
-        return YahooScrapper().get_data(ticker, start, end, period)
+        return YahooCrawler().get_data(ticker, start, end, period)
