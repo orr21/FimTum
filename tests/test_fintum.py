@@ -30,7 +30,7 @@ def test_get_sec_zip(mock_get_links,mock_get_zip):
     assert isinstance(result, zipfile.ZipFile), "Expected result to be a ZipFile"
     assert "test.txt" in result.namelist(), "Expected 'test.txt' inside the ZIP"
 
-@patch('fintum.scrappers.yahoo.yahooScrapper.YahooScrapper.get_data')
+@patch('fintum.crawler.yahoo.yahooCrawler.YahooCrawler.get_data')
 def test_get_yahoo_data_returns_dataframe(mock_get_data):
     df_mock = pd.DataFrame({'Close': [100, 101]})
     mock_get_data.return_value = df_mock
